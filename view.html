@@ -23,22 +23,24 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        const texture = new THREE.TextureLoader().load("images/container.png");
-
         const geometry = new THREE.PlaneGeometry(1, 1);
+
+
+        const texture = new THREE.TextureLoader().load("images/crate.png");
+
         const material = new THREE.MeshBasicMaterial({ map: texture });
         const plane = new THREE.Mesh(geometry, material);
         scene.add(plane);
 
-        camera.position.z = 5;
+        camera.position.z = 3;
 
         const animate = function () {
             requestAnimationFrame(animate);
 
-            plane.position.x = 1;
+            // plane.position.x = 1;
+            plane.rotation.x = 0.01;
+            plane.rotation.y = 0.01;
 
-            camera.position.x += 0.01;
-            camera.position.y += 0.01;
 
             renderer.render(scene, camera);
         };
