@@ -1,39 +1,41 @@
 <!DOCTYPE html>
-<html lang="zh">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="js/three.js"></script>
+    <style>
+        body { margin: 0; }
+    </style>
 </head>
-
 <body>
-
-</body>
-
+    <script src="js/three.js"></script>
     <script>
-        var scene = THREE.Scene();
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-        var cemera = new THREE.PerspectiveCemera(75, window.innerWidth/window.innerHeight, 1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( renderer.domElement );
 
-        var renderer = new THREE.WebGLRenderer();
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+        const cube = new THREE.Mesh( geometry, material );
+        scene.add( cube );
 
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.position.z = 3;
 
-        document.body.appendChild(renderer.domElement);
+        const animate = function () {
+            requestAnimationFrame( animate );
 
-        var geometry = new THREE.CubeGeometry(2, 2, 2);
+            cube.rotation.x += 0.01;
+            cube.rotation.y -= 0.01;
 
-        var material = new THREE.MeshBasicMaterial({color:0xff0000});
+            renderer.render( scene, camera );
+        };
 
-        var cube = new THREE.Mesh(geometry,material)
-
-        scene.add(cube);
-
-        cemera.position.z = 5;
-
+        animate();
     </script>
-
+</body>
 </html>

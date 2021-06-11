@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="js/three.js"></script>
+    <script>
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const object = new THREE.Object3D();
+        scene.add(object);
+
+        const object1 = new THREE.Object3D();
+        const object2 = new THREE.Object3D();
+
+        object1.add(object2);
+        scene.add(object1); //object1 and object2 will automatically update their matrices
+
+        const MAX_POINTS = 500;
+
+        // geometry
+        const geometry = new THREE.BufferGeometry();
+
+        // attributes
+        const positions = new Float32Array(MAX_POINTS * 3); // 3 vertices per point
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        // draw range
+        const drawCount = 2; // draw the first 2 points, only
+        geometry.setDrawRange(0, drawCount);
+
+        // material
+        const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
+
+        // line
+        const line = new THREE.Line(geometry, material);
+        scene.add(line);
+
+        const positions = line.geometry.attributes.position.array;
+
+        let x, y, z, index;
+        x = y = z = index = 0;
+
+        for (let i = 0, l = MAX_POINTS; i < l; i++) {
+
+            positions[index++] = x;
+            positions[index++] = y;
+            positions[index++] = z;
+
+            x += (Math.random() - 0.5) * 30;
+            y += (Math.random() - 0.5) * 30;
+            z += (Math.random() - 0.5) * 30;
+
+        }
+
+        line.geometry.setDrawRange(0, newValue);
+
+        line.geometry.attributes.position.needsUpdate = true; // required after the first render
+
+        line.geometry.computeBoundingBox();
+        line.geometry.computeBoundingSphere();
+
+        material.needsUpdate = true
+
+        texture.needsUpdate = true;
+
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+
+        //原始碼
+        // const geometry = new THREE.PlaneGeometry(1, 1);
+        // const material = new THREE.MeshBasicMaterial({ color: 0xffff00, side: THREE.DoubleSide });
+        // const plane = new THREE.Mesh(geometry, material);
+        // scene.add(plane);
+
+        // camera.position.z = 1;
+
+        // const animate = function () {
+        //     requestAnimationFrame(animate);
+
+        //     plane.position.x = 0;
+
+        //     camera.position.x += 0.001;
+        //     renderer.render(scene, camera);
+        // };
+
+        // animate();
+    </script>
+</body>
+
+</html>
