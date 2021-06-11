@@ -30,14 +30,16 @@
         const plane = new THREE.Mesh(geometry, material);
         scene.add(plane);
 
-        camera.position.z = 1;
+        camera.position.z = 5;
 
         const animate = function () {
             requestAnimationFrame(animate);
 
-            plane.position.x = 3;
+            plane.position.x = 1;
 
-            camera.position.x += 0.001;
+            camera.position.x += 0.01;
+            camera.position.y += 0.01;
+
             renderer.render(scene, camera);
         };
 
